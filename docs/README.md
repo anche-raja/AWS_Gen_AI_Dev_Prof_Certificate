@@ -2,9 +2,6 @@
 
 Use this as a quick reference for patterns and gotchas you’re likely to see on the exam or in real projects.
 
-## Lambda packaging and environment 🧰
-- Don’t set reserved Lambda env vars like `AWS_REGION`. The platform injects them; setting them causes `InvalidParameterValueException`.
-- Keep model ID and output bucket in env vars (easier to change without code edits).
 
 ## Bedrock async invoke IAM (least privilege) 🔐
 You typically need BOTH of these permissions:
@@ -44,6 +41,33 @@ Optional (depending on API): also include `bedrock:InvokeModelWithResponseStream
 - S3 policy “MalformedPolicy” with conditions: split object and bucket actions into separate statements and apply conditions only where valid.
 - Bedrock AccessDenied on async jobs: add `bedrock:InvokeModel` on `async-invoke/<model_id>` (and `StartAsyncInvoke` on `foundation-model/<model_id>`).
 - Bedrock text body validation: avoid putting guardrail fields in the JSON body unless the model’s input schema requires it. Use correct `contentType`/`accept` headers for `invoke_model` and `invoke_model_with_response_stream`.
+  - We used the following headers to fix validation/guardrails issues:
+    - `contentType = "application/json"`
+    - `accept = "application/json"`
+  - Place model options (messages/inferenceConfig) in the body; do NOT include `guardrailVersion` inside the body. If you need guardrails, pass them via supported top-level API parameters rather than inside the JSON payload.
+
+### Header and payload examples
+- Sync text:
+
+```python
+response = bedrock_runtime.invoke_model(
+    modelId=text_model_id,
+    body=json.dumps(body),             # messages-v1 schema
+    contentType="application/json",
+    accept="application/json",
+)
+```
+
+- Streaming text:
+
+```python
+response = bedrock_runtime.invoke_model_with_response_stream(
+    modelId=text_model_id,
+    body=json.dumps(body),             # messages-v1 schema
+    contentType="application/json",
+    accept="application/json",
+)
+```
 
 ## Exam-oriented reminders 📝
 - Map service-specific ARNs: Bedrock `foundation-model` (no account id) vs `async-invoke` (with account id).
