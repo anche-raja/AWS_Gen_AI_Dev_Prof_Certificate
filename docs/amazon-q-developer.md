@@ -152,4 +152,43 @@ The Amazon Q Detector Library describes the detectors used during code reviews t
 - Availability: Q code reviews include hundreds of security and quality detectors (language support varies). Amazon Inspector code scanning applies these to Lambda (see service docs for supported languages)
 - Smart scoping: Q filters out unsupported languages, test code, and open-source code to focus on relevant customer code
 
+---
+
+## OWASP Top 10 and CWE Top 25 explained 📚
+
+These are widely adopted lists of high-impact software risks. Amazon Q maps findings to these categories to help you prioritize and remediate effectively.
+
+- OWASP = Open Worldwide Application Security Project (Top 10 web application security risks)
+- CWE = Common Weakness Enumeration (MITRE catalog of software weakness types)
+
+### OWASP Top 10 (web app risks) 🔟
+Representative categories (names may evolve per the latest list):
+- Broken Access Control (A01): Missing/incorrect authorization checks (e.g., allowing unauthorized resource access).
+- Cryptographic Failures (A02): Weak/absent encryption, hard-coded secrets, insecure TLS.
+- Injection (A03): SQL/NoSQL/OS command injection via unsanitized input.
+- Insecure Design (A04): Missing security controls or defense-in-depth by design.
+- Security Misconfiguration (A05): Overly permissive CORS, verbose error messages, default creds.
+- Vulnerable and Outdated Components (A06): Known-vulnerable libraries, unpatched dependencies.
+- Identification and Authentication Failures (A07): Weak auth, missing MFA, session weaknesses.
+- Software and Data Integrity Failures (A08): Insecure deserialization, untrusted updates.
+- Security Logging and Monitoring Failures (A09): Insufficient logging/alerting for incidents.
+- Server-Side Request Forgery (SSRF) (A10): Backend fetching attacker-controlled URLs.
+
+How Q helps: Detectors flag code or config patterns that commonly lead to these risks (e.g., concatenated SQL strings → Injection; publicly readable S3 buckets → Misconfiguration).
+
+### CWE Top 25 (most dangerous software weaknesses) 🧩
+Representative CWEs targeted by detectors:
+- CWE-79 Cross-Site Scripting (XSS): Unescaped user input in HTML/JS contexts.
+- CWE-89 SQL Injection: Dynamic queries with user input; lack of parameters/binding.
+- CWE-78 OS Command Injection: Passing user input to shell/system commands.
+- CWE-20 Improper Input Validation: Missing validation/sanitization on inputs.
+- CWE-22 Path Traversal: Using attacker-controlled file paths (e.g., ../).
+- CWE-352 Cross-Site Request Forgery (CSRF): Missing anti-CSRF protections.
+- CWE-502 Deserialization of Untrusted Data: Unsafe object deserialization.
+- CWE-611 XXE: Insecure XML parsers allowing external entity resolution.
+- CWE-200 Information Exposure: Leaking secrets, stack traces, or sensitive data.
+- CWE-522 Insufficiently Protected Credentials: Plaintext passwords, weak key storage.
+
+How Q helps: Findings include CWE tags, severity, rationale, and compliant examples; use them to apply parameterized queries, input validation, safe serializers/parsers, and least-privilege configurations.
+
 
