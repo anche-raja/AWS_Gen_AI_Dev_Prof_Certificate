@@ -11,13 +11,13 @@ This stack bootstraps a secure S3 bucket for Terraform state and a DynamoDB tabl
 - AWS credentials configured (environment, profile, or SSO)
 
 ## Usage
-Initialize and apply (choose a globally-unique S3 bucket name):
+Initialize and apply (choose a globally-unique S3 bucket name or use the default):
 
 ```bash
 cd exercises/terraform_state
 terraform init
 terraform apply \
-  -var 's3_bucket_name=<your-unique-bucket-name>' \
+  -var 's3_bucket_name=tf-state-genai-dev-prof-certificate' \
   -var 'aws_region=us-east-1'
 ```
 
@@ -55,9 +55,9 @@ encrypt        = true
 ```
 
 ## Inputs
-- `s3_bucket_name` (string, required): Globally unique bucket name for state
+- `s3_bucket_name` (string, default `tf-state-genai-dev-prof-certificate`)
 - `aws_region` (string, default `us-east-1`)
-- `dynamodb_table_name` (string, default `terraform-locks`)
+- `dynamodb_table_name` (string, default `terraform-locks-genai-dev-prof-certificate`)
 - `project_name` (string, default `AWS_Gen_AI_Dev_Prof_Certificate`)
 - `force_destroy` (bool, default `false`)
 - `sse_kms_key_arn` (string, default `""`) – if set, bucket uses KMS SSE

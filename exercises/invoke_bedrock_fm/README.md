@@ -17,9 +17,10 @@ terraform apply -auto-approve
 
 ## Variables
 - `aws_region` (default `us-east-1`)
-- `model_id` (default `anthropic.claude-3-haiku-20240307-v1:0`)
+- `model_id` (default `amazon.nova-reel-v1:0`)
 - `lambda_function_name` (default `invoke-bedrock-fm`)
 - `lambda_timeout_seconds` (default `30`)
+- `video_bucket_name` (default `gen-ai-exercise-dp01`)
 
 ## Test
 Invoke the Lambda with a prompt:
