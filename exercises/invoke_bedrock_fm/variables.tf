@@ -22,6 +22,12 @@ variable "model_id" {
   default     = "amazon.nova-reel-v1:0"
 }
 
+variable "text_model_id" {
+  description = "Bedrock text model ID for sync/streaming text generation"
+  type        = string
+  default     = "amazon.nova-micro-v1:0"
+}
+
 variable "lambda_timeout_seconds" {
   description = "Lambda timeout in seconds"
   type        = number

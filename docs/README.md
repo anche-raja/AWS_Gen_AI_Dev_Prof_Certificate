@@ -13,6 +13,7 @@ You typically need BOTH of these permissions:
 - bedrock:InvokeModel on the async-invoke resource:
   - Resource (scoped): `arn:aws:bedrock:<region>:<account_id>:async-invoke/<model_id>`
   - If you don’t know the model at deploy time, use `async-invoke/*` (broader).
+ - For streaming text, also include `bedrock:InvokeModelWithResponseStream` on the same resource.
 
 > ⚠️ Common error and fix:
 - Error: “is not authorized to perform: bedrock:InvokeModel on resource: arn:aws:bedrock:<region>:<account_id>:async-invoke/*”
@@ -42,6 +43,7 @@ Optional (depending on API): also include `bedrock:InvokeModelWithResponseStream
 - Lambda “reserved keys” error: remove `AWS_REGION` (and other reserved keys) from Lambda environment.
 - S3 policy “MalformedPolicy” with conditions: split object and bucket actions into separate statements and apply conditions only where valid.
 - Bedrock AccessDenied on async jobs: add `bedrock:InvokeModel` on `async-invoke/<model_id>` (and `StartAsyncInvoke` on `foundation-model/<model_id>`).
+- Bedrock text body validation: avoid putting guardrail fields in the JSON body unless the model’s input schema requires it. Use correct `contentType`/`accept` headers for `invoke_model` and `invoke_model_with_response_stream`.
 
 ## Exam-oriented reminders 📝
 - Map service-specific ARNs: Bedrock `foundation-model` (no account id) vs `async-invoke` (with account id).

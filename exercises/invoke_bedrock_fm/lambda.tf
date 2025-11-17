@@ -18,6 +18,7 @@ resource "aws_lambda_function" "invoke_bedrock" {
     variables = {
       MODEL_ID     = var.model_id
       VIDEO_BUCKET = var.video_bucket_name
+      TEXT_MODEL_ID = var.text_model_id
     }
   }
 

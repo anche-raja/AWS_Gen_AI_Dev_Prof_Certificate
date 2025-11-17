@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "lambda_policy" {
   statement {
     sid     = "AllowBedrockInvokeOnAsyncResource"
     effect  = "Allow"
-    actions = ["bedrock:InvokeModel"]
+    actions = ["bedrock:InvokeModel","bedrock:InvokeModelWithResponseStream"]
     resources = ["arn:aws:bedrock:us-east-1:284244381060:async-invoke/*",
                 "arn:aws:bedrock:us-east-1::foundation-model/*"]
   }

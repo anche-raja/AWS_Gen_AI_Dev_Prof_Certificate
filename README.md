@@ -49,6 +49,7 @@ Provisions:
 - 🔐 IAM role with least-privilege access to submit async jobs to a specific model and write to CloudWatch Logs
 - 🪣 S3 bucket `gen-ai-exercise-dp01` for video outputs
 - 🧠 Lambda `invoke-bedrock-fm` that calls `amazon.nova-reel-v1:0` asynchronously and writes outputs to S3
+  - Also supports Bedrock text generation (sync) and streaming text generation
 
 Deploy:
 
@@ -58,12 +59,32 @@ terraform init -backend-config=backend.hcl
 terraform apply -auto-approve
 ```
 
-Invoke the Lambda:
+Invoke the Lambda – video (default action):
 
 ```bash
 aws lambda invoke \
   --function-name invoke-bedrock-fm \
   --payload '{"prompt":"A person dancing on a mountain."}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
+Invoke the Lambda – text (sync):
+
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"text_generate","prompt":"Rewrite this sentence for a formal tone: You are very good at your job."}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
+Invoke the Lambda – text (streaming):
+
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"text_stream","prompt":"Tell me what types of dances people do."}' \
   --cli-binary-format raw-in-base64-out \
   /dev/stdout | jq
 ```
@@ -77,7 +98,8 @@ Outputs are stored in:
 - ⚙️ Lambda environment:
   - `MODEL_ID` (default `amazon.nova-reel-v1:0`)
   - `VIDEO_BUCKET` (default `gen-ai-exercise-dp01`)
+  - `TEXT_MODEL_ID` (default `amazon.nova-micro-v1:0`)
 - 🧩 IAM least-privilege highlights:
   - `bedrock:StartAsyncInvoke` on the specific foundation model ARN
-  - `bedrock:InvokeModel` on the account’s async-invoke resource for the model
+  - `bedrock:InvokeModel` (and streaming) on the account’s async-invoke resource for the model
 
