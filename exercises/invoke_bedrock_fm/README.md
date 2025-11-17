@@ -1,12 +1,12 @@
-# Invoke Bedrock FM (Terraform + Lambda)
+# Invoke Bedrock FM (Terraform + Lambda) 🎥🧠
 
-This stack creates a Lambda function and IAM role to invoke an Amazon Bedrock foundation model, using the shared S3/DynamoDB backend state.
+Provision a Lambda and IAM role to invoke Amazon Bedrock (async video), using a shared S3/DynamoDB backend state. Also supports text generation (sync) and streaming.
 
 ## Backend
-Already configured via `backend.hcl` to use:
-- bucket: `tf-state-genai-dev-prof-certificate`
-- table: `terraform-locks-genai-dev-prof-certificate`
-- region: `us-east-1`
+Configured via `backend.hcl`:
+- 🪣 bucket: `tf-state-genai-dev-prof-certificate`
+- 📇 table: `terraform-locks-genai-dev-prof-certificate`
+- 🌎 region: `us-east-1`
 
 ## Deploy
 ```bash
@@ -17,22 +17,42 @@ terraform apply -auto-approve
 
 ## Variables
 - `aws_region` (default `us-east-1`)
-- `model_id` (default `amazon.nova-reel-v1:0`)
+- `model_id` (default `amazon.nova-reel-v1:0`) – video
+- `text_model_id` (default `amazon.nova-micro-v1:0`) – text
 - `lambda_function_name` (default `invoke-bedrock-fm`)
 - `lambda_timeout_seconds` (default `30`)
 - `video_bucket_name` (default `gen-ai-exercise-dp01`)
 
-## Test
-Invoke the Lambda with a prompt:
-
+## Invoke examples
+- Video (default action):
 ```bash
 aws lambda invoke \
   --function-name invoke-bedrock-fm \
-  --payload '{\"prompt\":\"Write a haiku about Terraform and Bedrock.\"}' \
+  --payload '{"prompt":"A person dancing on a mountain."}' \
   --cli-binary-format raw-in-base64-out \
   /dev/stdout | jq
 ```
 
-If you need a different model, update `-var "model_id=..."` during apply or set the environment variable in Terraform.
+- Text (sync):
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"text_generate","prompt":"Rewrite this sentence for a formal tone: You are very good at your job."}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
+- Text (streaming):
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"text_stream","prompt":"Tell me what types of dances people do."}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
+> 🔒 Note: Ensure your account has access to the models in `us-east-1`. The S3 bucket policy grants `bucket-owner-full-control` for Bedrock writes.
+
+If you need a different model, update `-var "model_id=..."`/`-var "text_model_id=..."` during apply or adjust Lambda env vars.
 
 
