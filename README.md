@@ -1,5 +1,5 @@
 # AWS_Gen_AI_Dev_Prof_Certificate ✨
-Hands-on exercises for Amazon's GenAI Developer Professional Certificate, using Terraform to manage infrastructure.
+Hands-on exercises for learning and preparing for Amazon's GenAI Developer Professional certification, using Terraform to manage infrastructure.
 
 ![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock-orange?logo=amazon-aws) ![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform) ![Language](https://img.shields.io/badge/Language-Python-3776AB?logo=python)
 
@@ -11,6 +11,9 @@ Hands-on exercises for Amazon's GenAI Developer Professional Certificate, using 
 ## Repository layout
 - 📦 `exercises/terraform_state/` – Bootstrap stack for Terraform remote state (S3 + DynamoDB)
 - 🎥 `exercises/invoke_bedrock_fm/` – Lambda that invokes Amazon Bedrock (async video), plus S3 bucket for outputs
+- 📘 Docs:
+  - Best practices and exam tips: `docs/README.md`
+  - Amazon Q Developer overview: `docs/amazon-q-developer.md`
 
 ## 1) Bootstrap Terraform remote state
 Creates a versioned, encrypted S3 bucket and a DynamoDB table for Terraform state locking. 🔐
