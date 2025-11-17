@@ -1,6 +1,6 @@
 # Best Practices and Exam Tips (Bedrock + AWS)
 
-Use this as a quick reference for patterns and gotchas you’re likely to see on the exam or in real projects.
+Use this as a quick reference for patterns and gotchas you’re likely to see on the exam or in real projects..
 
 ## Lambda packaging and environment
 - Don’t set reserved Lambda env vars like `AWS_REGION`. The platform injects them; setting them causes `InvalidParameterValueException`.
