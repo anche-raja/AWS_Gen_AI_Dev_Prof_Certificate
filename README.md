@@ -1,5 +1,5 @@
 # AWS_Gen_AI_Dev_Prof_Certificate
-Hands-on exercises for Amazon's GenAI Developer Professional Certificate, using Terraform to manage infrastructure.
+Hands-on exercises for Amazon's GenAI Developer Professional Certificate, using Terraform to manage infrastructure..
 
 ## Prerequisites
 - Terraform >= 1.5
