@@ -63,6 +63,15 @@ Use when you don’t need a synchronous response (e.g., video generation). This 
 - Check status by invoking with:
   - `{"action":"async_status","invocationArn":"<arn from submit>"}`
 
+CLI example (check status):
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"async_status","invocationArn":"<PUT_INVOCATION_ARN_HERE>"}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
 IAM reminders:
 - Role needs `bedrock:StartAsyncInvoke` on the foundation-model ARN
 - Role needs `bedrock:InvokeModel`/`bedrock:GetAsyncInvoke` on `arn:aws:bedrock:<region>:<account>:async-invoke/<model_id>`
@@ -76,6 +85,25 @@ Processes many records in parallel from S3 (JSONL input) and writes outputs to S
   - `{"action":"batch_submit","roleArn":"<job role>","inputS3Uri":"s3://bucket/path/data.jsonl","outputS3Uri":"s3://bucket/path/","modelId":"<model-id-optional>","jobName":"optional-name"}`
 - Check status:
   - `{"action":"batch_status","jobArn":"<returned job arn>"}`
+
+CLI examples:
+- Submit:
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"batch_submit","roleArn":"arn:aws:iam::<ACCOUNT_ID>:role/bedrock-batch-role","inputS3Uri":"s3://my-input-bucket/path/data.jsonl","outputS3Uri":"s3://my-output-bucket/path/","modelId":"anthropic.claude-3-haiku-20240307-v1:0","jobName":"support-ticket-batch"}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
+
+- Status:
+```bash
+aws lambda invoke \
+  --function-name invoke-bedrock-fm \
+  --payload '{"action":"batch_status","jobArn":"<PUT_JOB_ARN_HERE>"}' \
+  --cli-binary-format raw-in-base64-out \
+  /dev/stdout | jq
+```
 
 Batch job IAM (job role):
 - Trust: `bedrock.amazonaws.com`
