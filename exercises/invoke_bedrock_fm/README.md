@@ -86,6 +86,13 @@ Processes many records in parallel from S3 (JSONL input) and writes outputs to S
 - Check status:
   - `{"action":"batch_status","jobArn":"<returned job arn>"}`
 
+Model input (JSONL) example to upload to your S3 input location (each line is one InvokeModel request body):
+```json
+{"input":{"messages":[{"role":"user","content":[{"text":"You are a triage assistant. Classify the urgency: 'Login not working for multiple users'"}]}]}}
+{"input":{"messages":[{"role":"user","content":[{"text":"You are a triage assistant. Classify the urgency: 'UI alignment issue on settings page'"}]}]}}
+{"input":{"messages":[{"role":"user","content":[{"text":"You are a triage assistant. Classify the urgency: 'Payment gateway returns 500 intermittently'"}]}]}}
+```
+
 CLI examples:
 - Submit:
 ```bash
