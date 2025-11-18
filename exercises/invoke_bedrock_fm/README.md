@@ -93,6 +93,25 @@ Model input (JSONL) example to upload to your S3 input location (each line is on
 {"input":{"messages":[{"role":"user","content":[{"text":"You are a triage assistant. Classify the urgency: 'Payment gateway returns 500 intermittently'"}]}]}}
 ```
 
+Alternate JSONL format (recordId + modelInput) also supported by Bedrock batch jobs. Each line should be a compact version of an object like this:
+```json
+{
+  "recordId": "CALL0000001",
+  "modelInput": {
+    "anthropic_version": "bedrock-2023-05-31",
+    "max_tokens": 1024,
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          { "type": "text", "text": "Summarize the following call transcript: ..." }
+        ]
+      }
+    ]
+  }
+}
+```
+
 CLI examples:
 - Submit:
 ```bash
