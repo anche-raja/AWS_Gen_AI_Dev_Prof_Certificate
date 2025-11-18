@@ -3,11 +3,6 @@ Hands-on exercises for learning and preparing for Amazon's GenAI Developer Profe
 
 ![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock-orange?logo=amazon-aws) ![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform) ![Language](https://img.shields.io/badge/Language-Python-3776AB?logo=python)
 
-## Prerequisites
-- Terraform >= 1.5
-- AWS CLI configured (profile, env vars, or SSO)
-- Permissions to create S3, DynamoDB, IAM, Lambda, and Bedrock invoke
-
 ## Repository layout
 - 📦 `exercises/terraform_state/` – Bootstrap stack for Terraform remote state (S3 + DynamoDB)
 - 🎥 `exercises/invoke_bedrock_fm/` – Lambda that invokes Amazon Bedrock (async video), plus S3 bucket for outputs
@@ -15,94 +10,19 @@ Hands-on exercises for learning and preparing for Amazon's GenAI Developer Profe
   - Best practices and exam tips: `docs/README.md`
   - Amazon Q Developer overview: `docs/amazon-q-developer.md`
 
-## 1) Bootstrap Terraform remote state
-Creates a versioned, encrypted S3 bucket and a DynamoDB table for Terraform state locking. 🔐
+## What this repo covers
+- Terraform remote state bootstrap (S3 + DynamoDB) for consistent IaC workflows
+- Bedrock invocations via Lambda:
+  - Async video generation (Nova Reel) with S3 output
+  - Text generation (sync) and streaming (Nova Micro)
+  - Async status checks and Batch invocation submissions
+- Study notes:
+  - Best practices, IAM least privilege, Bedrock headers/guardrails
+  - Amazon Q Developer overview and Detector Library highlights
 
-```bash
-cd exercises/terraform_state
-terraform init
-terraform apply \
-  -var 's3_bucket_name=<your-unique-bucket-name>' \
-  -var 'aws_region=us-east-1'
-```
-
-Outputs:
-- 🪣 `state_bucket` – S3 bucket name for remote state
-- 🔏 `lock_table` – DynamoDB lock table
-- 🌎 `region` – Region for backend
-
-In other stacks, configure the backend via a `backend.hcl` file:
-
-```hcl
-bucket         = "<state_bucket_output>"
-key            = "global/terraform.tfstate"
-region         = "<region_output>"
-dynamodb_table = "<lock_table_output>"
-encrypt        = true
-```
-
-Then initialize with:
-
-```bash
-terraform init -backend-config=backend.hcl
-```
-
-## 2) Invoke Bedrock foundation model (async video)
-Provisions:
-- 🔐 IAM role with least-privilege access to submit async jobs to a specific model and write to CloudWatch Logs
-- 🪣 S3 bucket `gen-ai-exercise-dp01` for video outputs
-- 🧠 Lambda `invoke-bedrock-fm` that calls `amazon.nova-reel-v1:0` asynchronously and writes outputs to S3
-  - Also supports Bedrock text generation (sync) and streaming text generation
-
-Deploy:
-
-```bash
-cd exercises/invoke_bedrock_fm
-terraform init -backend-config=backend.hcl
-terraform apply -auto-approve
-```
-
-Invoke the Lambda – video (default action):
-
-```bash
-aws lambda invoke \
-  --function-name invoke-bedrock-fm \
-  --payload '{"prompt":"A person dancing on a mountain."}' \
-  --cli-binary-format raw-in-base64-out \
-  /dev/stdout | jq
-```
-
-Invoke the Lambda – text (sync):
-
-```bash
-aws lambda invoke \
-  --function-name invoke-bedrock-fm \
-  --payload '{"action":"text_generate","prompt":"Rewrite this sentence for a formal tone: You are very good at your job."}' \
-  --cli-binary-format raw-in-base64-out \
-  /dev/stdout | jq
-```
-
-Invoke the Lambda – text (streaming):
-
-```bash
-aws lambda invoke \
-  --function-name invoke-bedrock-fm \
-  --payload '{"action":"text_stream","prompt":"Tell me what types of dances people do."}' \
-  --cli-binary-format raw-in-base64-out \
-  /dev/stdout | jq
-```
-
-Outputs are stored in:
-- 🎞️ `s3://gen-ai-exercise-dp01/video/`
-
-### Notes
-- ✅ Ensure your account has access to the Bedrock model `amazon.nova-reel-v1:0` in `us-east-1`.
-- 🔒 The S3 bucket policy allows the Bedrock service to write objects with `bucket-owner-full-control`.
-- ⚙️ Lambda environment:
-  - `MODEL_ID` (default `amazon.nova-reel-v1:0`)
-  - `VIDEO_BUCKET` (default `gen-ai-exercise-dp01`)
-  - `TEXT_MODEL_ID` (default `amazon.nova-micro-v1:0`)
-- 🧩 IAM least-privilege highlights:
-  - `bedrock:StartAsyncInvoke` on the specific foundation model ARN
-  - `bedrock:InvokeModel` (and streaming) on the account’s async-invoke resource for the model
+## Quick links
+- Remote state setup and usage: `exercises/terraform_state/README.md`
+- Bedrock Lambda usage (all commands and actions): `exercises/invoke_bedrock_fm/README.md`
+- Best practices and exam tips: `docs/README.md`
+- Amazon Q Developer: `docs/amazon-q-developer.md`
 
