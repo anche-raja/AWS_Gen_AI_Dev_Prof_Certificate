@@ -55,4 +55,31 @@ aws lambda invoke \
 
 If you need a different model, update `-var "model_id=..."`/`-var "text_model_id=..."` during apply or adjust Lambda env vars.
 
+---
+
+## Asynchronous invocation (start-async-invoke) ⏳
+Use when you don’t need a synchronous response (e.g., video generation). This Lambda already uses async for the video path. You can also:
+- Submit job via default action (video_generate)
+- Check status by invoking with:
+  - `{"action":"async_status","invocationArn":"<arn from submit>"}`
+
+IAM reminders:
+- Role needs `bedrock:StartAsyncInvoke` on the foundation-model ARN
+- Role needs `bedrock:InvokeModel`/`bedrock:GetAsyncInvoke` on `arn:aws:bedrock:<region>:<account>:async-invoke/<model_id>`
+- Bucket policy must allow Bedrock service to `s3:PutObject` with `bucket-owner-full-control`
+
+---
+
+## Batch invocation (create-model-invocation-job) 📦
+Processes many records in parallel from S3 (JSONL input) and writes outputs to S3. Use Lambda actions instead of inline code:
+- Submit job:
+  - `{"action":"batch_submit","roleArn":"<job role>","inputS3Uri":"s3://bucket/path/data.jsonl","outputS3Uri":"s3://bucket/path/","modelId":"<model-id-optional>","jobName":"optional-name"}`
+- Check status:
+  - `{"action":"batch_status","jobArn":"<returned job arn>"}`
+
+Batch job IAM (job role):
+- Trust: `bedrock.amazonaws.com`
+- Access: `s3:GetObject` on input prefix, `s3:PutObject` on output prefix
+- Inference: `bedrock:InvokeModel` (and `bedrock:InvokeModelWithResponseStream` if used)
+
 

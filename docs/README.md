@@ -58,6 +58,10 @@ response = bedrock_runtime.invoke_model(
 )
 ```
 
+## Async vs Batch 🧭
+- Async (start-async-invoke): Fire-and-forget a single request; poll with `get_async_invoke_status`; great for longer jobs like video generation.
+- Batch (create-model-invocation-job): Large-scale parallel processing using S3 JSONL inputs/outputs; AWS orchestrates processing; ensure a dedicated job role with S3 and `bedrock:InvokeModel` permissions.
+
 - Streaming text:
 
 ```python

@@ -37,9 +37,19 @@ data "aws_iam_policy_document" "lambda_policy" {
   statement {
     sid     = "AllowBedrockInvokeOnAsyncResource"
     effect  = "Allow"
-    actions = ["bedrock:InvokeModel","bedrock:InvokeModelWithResponseStream"]
+    actions = ["bedrock:InvokeModel","bedrock:InvokeModelWithResponseStream","bedrock:GetAsyncInvoke"]
     resources = ["arn:aws:bedrock:us-east-1:284244381060:async-invoke/*",
                 "arn:aws:bedrock:us-east-1::foundation-model/*"]
+  }
+
+  statement {
+    sid     = "AllowBedrockBatchJobs"
+    effect  = "Allow"
+    actions = [
+      "bedrock:CreateModelInvocationJob",
+      "bedrock:GetModelInvocationJob"
+    ]
+    resources = ["*"]
   }
   statement {
     sid     = "AllowS3WriteVideoOutputs"

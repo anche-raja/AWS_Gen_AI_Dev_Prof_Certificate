@@ -14,6 +14,12 @@ def lambda_handler(event, context):
         return _handle_text_generate(event)
     if action == "text_stream":
         return _handle_text_stream(event)
+    if action == "async_status":
+        return _handle_async_status(event)
+    if action == "batch_submit":
+        return _handle_batch_submit(event)
+    if action == "batch_status":
+        return _handle_batch_status(event)
     return _handle_video_generate(event)
 
 
@@ -134,3 +140,52 @@ def _handle_text_stream(event):
         "body": full_text,
     }
 
+def _handle_async_status(event):
+    invocation_arn = (event or {}).get("invocationArn")
+    if not invocation_arn:
+        return {"statusCode": 400, "error": "invocationArn is required"}
+    status = bedrock_runtime.get_async_invoke_status(invocationArn=invocation_arn)
+    return {
+        "statusCode": 200,
+        "action": "async_status",
+        "invocationArn": invocation_arn,
+        "status": status.get("status"),
+        "details": status
+    }
+
+def _handle_batch_submit(event):
+    role_arn = (event or {}).get("roleArn")
+    input_s3_uri = (event or {}).get("inputS3Uri")
+    output_s3_uri = (event or {}).get("outputS3Uri")
+    model_id = (event or {}).get("modelId") or os.environ.get("TEXT_MODEL_ID", "amazon.nova-micro-v1:0")
+    job_name = (event or {}).get("jobName", "bedrock-batch-job")
+
+    if not role_arn or not input_s3_uri or not output_s3_uri:
+        return {"statusCode": 400, "error": "roleArn, inputS3Uri, and outputS3Uri are required"}
+
+    resp = bedrock.create_model_invocation_job(
+        roleArn=role_arn,
+        modelId=model_id,
+        jobName=job_name,
+        inputDataConfig={"s3InputDataConfig": {"s3Uri": input_s3_uri}},
+        outputDataConfig={"s3OutputDataConfig": {"s3Uri": output_s3_uri}},
+    )
+    return {
+        "statusCode": 200,
+        "action": "batch_submit",
+        "jobArn": resp.get("jobArn"),
+        "modelId": model_id
+    }
+
+def _handle_batch_status(event):
+    job_arn = (event or {}).get("jobArn")
+    if not job_arn:
+        return {"statusCode": 400, "error": "jobArn is required"}
+    st = bedrock.get_model_invocation_job(jobArn=job_arn)
+    return {
+        "statusCode": 200,
+        "action": "batch_status",
+        "jobArn": job_arn,
+        "status": st.get("status"),
+        "details": st
+    }
