@@ -61,9 +61,11 @@ Higher score doesn’t always mean “best for you.” Consider:
 
 ## 3. Capability assessment framework (multi-dimension evaluation) 🧭
 
+**Goal:** Evaluate AI systems holistically, not just on a single test.
+
 ![Capability assessment flow](./images/capability-assessment-framework.png)
 
-**Goal:** Evaluate AI systems holistically, not just on a single test.
+
 
 ### 3.1 Systematic capability mapping
 - **Capability matrix:**
