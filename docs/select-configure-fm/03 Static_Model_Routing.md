@@ -1,11 +1,13 @@
 ## Static Model Routing 🧭
 
-![Static model routing diagram](./images/D1_L3_static_model_routing.png)
+
 
 Static model routing = **pre-defined rules in code** that decide which foundation model handles which task or input type.
 Decisions are made ahead of time, not at runtime via content analysis.
 
 Good for **well-defined, stable use cases** where tasks and input types are clear.
+
+![Static model routing diagram](./images/D1_L3_static_model_routing.png)
 
 ---
 
