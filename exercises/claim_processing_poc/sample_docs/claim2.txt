@@ -1,0 +1,10 @@
+Claimant: John Smith
+Policy: POL-98765
+Incident Date: 2025-08-01
+Type: Property - Water Damage
+Amount Requested: 11000 USD
+
+Description:
+Pipe burst in kitchen causing water damage to flooring and cabinets. Emergency plumber called. No injuries.
+
+

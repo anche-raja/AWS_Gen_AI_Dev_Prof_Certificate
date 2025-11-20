@@ -6,6 +6,7 @@ Hands-on exercises for learning and preparing for Amazon's GenAI Developer Profe
 ## Repository layout
 - 📦 `exercises/terraform_state/` – Bootstrap stack for Terraform remote state (S3 + DynamoDB)
 - 🎥 `exercises/invoke_bedrock_fm/` – Lambda that invokes Amazon Bedrock (async video), plus S3 bucket for outputs
+- 🏥 `exercises/claim_processing_poc/` – Insurance claim processing PoC (upload, Bedrock integration, simple RAG, summary)
 - 📘 Docs:
   - Best practices and exam tips: `docs/README.md`
   - Amazon Q Developer overview: `docs/amazon-q-developer.md`
