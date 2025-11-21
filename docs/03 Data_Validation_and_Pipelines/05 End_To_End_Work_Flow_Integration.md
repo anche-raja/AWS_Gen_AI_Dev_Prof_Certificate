@@ -1,6 +1,5 @@
 ## End-to-End Workflow Integration for FM Data Pipelines 🔗
 
-![End-to-end validation architecture](./images/D1_M13_L3_architecture_design.png)
 
 End-to-end workflow integration connects all your **validation, monitoring, and remediation** stages into a single, auditable pipeline.
 
@@ -55,7 +54,6 @@ Step Functions orchestrate multi-stage validation pipelines with:
 - Native integration with Glue, Lambda, SageMaker, SNS, etc.
 - Built-in retries, error handling, and audit trails.
 
-![Integrated data processing & validation layers](./images/D1_M13_L3_data_processing_layer.png)
 
 ### 3.1 Workflow state management
 - Tracks:
