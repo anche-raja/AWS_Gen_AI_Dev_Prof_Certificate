@@ -23,6 +23,8 @@ Benefits:
 
 ## 2. Pipeline architecture patterns 🏗️
 
+![Complete pipeline architecture](./images/D1_M13_L5_pipeline_architecture.png)
+
 Three core patterns:
 
 - **Sequential processing pattern**
@@ -72,6 +74,8 @@ Step Functions orchestrate multi-stage validation pipelines with:
   - Retry policies with backoff for transient errors.
   - Catch blocks for specific error types.
   - Fallback states when automatic recovery isn’t possible.
+
+![Workflow implementation steps](./images/D1_M13_L5_data_validation.png)
 
 ### 3.4 Conditional processing & quality gates
 - Use **Choice** states for:
