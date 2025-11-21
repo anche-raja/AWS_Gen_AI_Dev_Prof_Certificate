@@ -163,4 +163,79 @@ Comprehensive testing prevents regressions as you tweak prompts, parameters, or 
 - Monitor latency, error rates, payload sizes, and token usage to tune cost/perf.
 - Treat JSON schema changes like API changes – version them and update tests accordingly.
 
+---
+
+## 8. Structured data preparation for SageMaker endpoints 📦
+
+When you deploy foundation models behind **SageMaker endpoints**, input format and preprocessing are critical for **latency, throughput, and correctness**.
+
+### 8.1 Supported input formats
+- **JSON** – flexible key–value payloads; common for real‑time inference.
+- **CSV** – structured/tabular batch jobs.
+- **Protocol Buffers (Protobuf)** – efficient binary format for high‑throughput, low‑latency scenarios.
+
+> Protobuf is ideal when you have strict performance or memory constraints and a well‑defined schema.
+
+### 8.2 Preprocessing pipelines (text + multimodal) 🧱
+
+Well‑designed pipelines transform raw input into **model‑ready** payloads:
+
+- **Text processing:**
+  - Clean/normalize text (strip HTML, normalize Unicode, collapse whitespace).
+  - Apply case rules per model (lowercase vs preserve case).
+  - Tokenize or chunk if the model expects specific lengths.
+
+  ```python
+  import re, unicodedata
+
+  def clean_text(text: str) -> str:
+      text = re.sub(r"<[^>]+>", "", text)              # remove HTML
+      text = unicodedata.normalize("NFKD", text)       # normalize Unicode
+      text = re.sub(r"\s+", " ", text).strip()         # normalize spaces
+      return text
+  ```
+
+- **Multimodal handling:**
+  - Convert images to **base64** so they can be sent in JSON alongside text.
+  - Standardize image size/format as required by the model.
+
+### 8.3 Structuring combined payloads
+
+Example multimodal payload for a custom endpoint:
+
+```json
+{
+  "inputs": {
+    "text": "Describe what you see in this image",
+    "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."
+  },
+  "parameters": {
+    "max_new_tokens": 150
+  }
+}
+```
+
+Effective preprocessing = **match the model’s expected schema** and **test with real samples** before production.
+
+### 8.4 Performance optimization strategies 🚀
+
+- **Input size management**
+  - Trim irrelevant context; avoid oversized prompts/payloads.
+- **Payload structure optimization**
+  - Avoid deeply nested or redundant fields.
+  - Use concise keys where appropriate.
+- **Batch processing**
+  - Use mini‑batches where the model/endpoint supports it to improve throughput.
+- **Memory vs latency trade‑offs**
+  - Small batches → lower memory, potentially higher overall latency.
+  - Larger batches → higher throughput, more memory; tune using endpoint metrics.
+
+### 8.5 Implementation best practices (SageMaker) ✅
+
+- Always **validate input format against the model’s schema** before hitting production endpoints.
+- Test preprocessing with **representative production samples**.
+- For multimodal requests, ensure images are correctly **base64‑encoded** in JSON.
+- Use CloudWatch metrics (latency, errors, invocations) to tune batch size and payload structure.
+
+
 
