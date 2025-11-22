@@ -43,12 +43,7 @@ Choosing the right pattern depends on **query type, latency, and risk**:
 - **High-risk / regulated tasks**
   - Strict retrieval, heavy guardrails, human review or dual-control for critical actions.
 
-_Diagram:_  
-![Strategy selection](./images/strategy-selection.svg)
 
-Exam-ready idea: show you can **match patterns** to scenarios and justify why (e.g., cost, compliance, UX).
-
----
 
 ## 3. Performance and reliability at system level 🚦
 
@@ -81,8 +76,6 @@ End-to-end systems should **get better over time**, not stay static:
 
 _Diagrams:_  
 ![A/B testing framework](./images/ab-testing-framework.svg)  
-![Continuous improvement](./images/continuous-improvement.svg)
-
 ---
 
 ## 5. Pattern recognition & future evolution 🔍➡️🚀
@@ -96,11 +89,7 @@ Over time you’ll start seeing **repeatable patterns** in queries and workflows
   - Move from ad-hoc flows to **standardized query-processing components** and shared services.
   - Introduce higher-level orchestration / agent frameworks as needs mature.
 
-_Diagrams:_  
-![Pattern recognition](./images/pattern-recognition.svg)  
-![Future architecture](./images/future-architecture.svg)
 
----
 
 ## 6. Case study: Legal assistant end-to-end flow ⚖️
 
