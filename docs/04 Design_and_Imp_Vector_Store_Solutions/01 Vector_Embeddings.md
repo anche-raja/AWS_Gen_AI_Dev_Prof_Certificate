@@ -2,7 +2,6 @@
 
 Vector databases and embeddings change how we store and retrieve knowledge for generative AI. Instead of exact string matches, we query **semantic meaning** in high‑dimensional space.
 
-![Embedding models](./images/D1_M14_L1_embedding_models%20.png)
 
 ---
 
@@ -10,7 +9,6 @@ Vector databases and embeddings change how we store and retrieve knowledge for g
 
 Vector embeddings are **numerical vectors** that capture the semantic meaning of text, images, or other data types. Specialized neural networks turn content into **fixed‑length vectors** that models can compare and reason over.
 
-![Embedding vector space](./images/D1_M14_L1_embedding_vector.png)
 
 Key points:
 - Each embedding has **hundreds or thousands of dimensions**.
@@ -80,7 +78,6 @@ Choose metrics based on:
 3. Retrieve top‑k relevant chunks via similarity search.
 4. Feed retrieved context into the FM as part of the prompt.
 
-![Semantic relationships in vector space](./images/D1_M14_L1_semantic_relationship.png)
 
 Benefits:
 - Update knowledge without retraining the base model.
@@ -123,3 +120,8 @@ Choose based on:
 - Operational model (fully managed vs custom).
 
 
+![Embedding models](./images/D1_M14_L1_embedding_models%20.png)
+
+![Embedding vector space](./images/D1_M14_L1_embedding_vector.png)
+
+![Semantic relationships in vector space](./images/D1_M14_L1_semantic_relationship.png)
