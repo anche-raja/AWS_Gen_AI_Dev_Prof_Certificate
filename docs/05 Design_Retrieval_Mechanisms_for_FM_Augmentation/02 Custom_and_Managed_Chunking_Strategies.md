@@ -110,19 +110,19 @@ If managed chunking underperforms on **hard, domain-specific queries**, that’s
 
 ## 6. Visual aids from the course 🖼️
 
-Use these diagrams from `docs/tmp` as quick refreshers:
+Use these diagrams as quick refreshers:
 
 - **Chunking types overview**
 
-  ![Chunking types](../tmp/AWS Generative AI Developer - Design Retrieval Mechanisms for FM Augmentation_files/chunking-types.svg)
+  ![Chunking types](./images/chunking-types.svg)
 
 - **Configuration / workflow**
 
-  ![Chunking configuration workflow](../tmp/AWS Generative AI Developer - Design Retrieval Mechanisms for FM Augmentation_files/configuration-workflow.svg)
+  ![Chunking configuration workflow](./images/configuration-workflow.svg)
 
 - **Custom use cases**
 
-  ![Custom chunking use cases](../tmp/AWS Generative AI Developer - Design Retrieval Mechanisms for FM Augmentation_files/custom-use-cases.svg)
+  ![Custom chunking use cases](./images/custom-use-cases.svg)
 
 These mirror the ideas above and are useful “visual flashcards” before the exam.
 
