@@ -112,4 +112,28 @@ Be prepared to:
 
 Advanced relevance engineering is often what turns a “works on paper” RAG system into a **reliable, production‑grade assistant**. 
 
+---
+
+## 7. Relevance across document lifecycle & KB configuration 🔁
+
+Reranking quality depends heavily on **where your content is in its lifecycle** and **how your KB/index is configured**:
+
+- **Document lifecycle signals**
+  - Use lifecycle stage (draft, approved, deprecated) as **boosts/filters** in relevance.
+  - Prefer **current, approved** docs; down‑rank or exclude retired content.
+  - Incorporate **effective/expiry dates** into scoring to keep answers fresh.
+
+_Diagram:_  
+![Document lifecycle management](./images/document-lifecycle-management.svg)
+
+- **Knowledge base configuration levers**
+  - Choose embedding model and chunking strategy appropriate for your domain.
+  - Tune `top_k`, similarity thresholds, and filters (doc type, region, business unit).
+  - Decide where to apply **rerankers**: inside app code, via Bedrock, or on a custom index.
+
+_Diagram:_  
+![Bedrock Knowledge Bases foundation](./images/kb-creation-foundation.svg)
+
+On the exam, be ready to connect **lifecycle, KB configuration, and rerankers** as a single system: the better your upstream curation and KB setup, the less work your reranker has to do—and the more consistent your answers will be.
+
 
