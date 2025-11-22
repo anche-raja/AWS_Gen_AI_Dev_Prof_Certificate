@@ -135,4 +135,32 @@ Key outcome: **near real-time, resilient content pipelines** feeding your GenAI 
 
 Takeaway: **Enterprise content integration + GenAI** can become a **global, secure knowledge fabric** that measurably improves CX and operations.
 
+---
+
+## 6. Visual diagrams 🖼️
+
+Use these diagrams as quick visual memory aids for the patterns in this lesson:
+
+- **Content sources feeding search & AI**
+
+  ![Enterprise content source integration](./images/D1_M14_L9_content_source_integration.png)
+
+- **Storage & search layer**
+
+  ![Storage and search architecture](./images/D1_M14_L9_storage_search.png)
+
+- **Data extraction & enrichment**
+
+  ![Data extraction pipeline](./images/D1_M14_L9_data_extraction.png)
+  ![Lambda function development](./images/D1_M14_L9_lambda_function_dev.png)
+  ![Processing architecture](./images/D1_M14_L9_processing_architecture.png)
+
+- **API & service connectivity**
+
+  ![API connectivity](./images/D1_M14_L9_api_connectivity.png)
+  ![AWS service integration](./images/D1_M14_L9_AWS_service.png)
+
+- **Security & compliance**
+
+  ![Security and compliance architecture](./images/D1_M14_L9_security_compliance.png)
 
