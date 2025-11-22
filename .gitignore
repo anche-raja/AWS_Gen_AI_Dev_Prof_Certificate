@@ -1,0 +1,10 @@
+# Local training/export artifacts
+docs/tmp/
+
+# Terraform state (keep local)
+exercises/terraform_state/terraform.tfstate
+
+# Build artifacts
+exercises/invoke_bedrock_fm/build/
+
+
