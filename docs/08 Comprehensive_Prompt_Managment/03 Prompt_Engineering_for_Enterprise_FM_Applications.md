@@ -145,11 +145,6 @@ For complex enterprise tasks, you often need **transparent, stepwise reasoning**
   - More **stable outputs**, easier **debugging**, better **governance**.
   - Supports **explainability requirements** in regulated industries.
 
-  _Diagrams (benefits series):_  
-  <img src="./images/benefits-structured-reasoning-1.svg" alt="Benefits of structured reasoning 1" width="340" />  
-  <img src="./images/benefits-structured-reasoning-2.svg" alt="Benefits of structured reasoning 2" width="340" />  
-  <img src="./images/benefits-structured-reasoning-3.svg" alt="Benefits of structured reasoning 3" width="340" />  
-  <img src="./images/benefits-structured-reasoning-4.svg" alt="Benefits of structured reasoning 4" width="340" />
 
 For safety‑sensitive domains, consider **hiding raw chain-of-thought** from end users while still using it internally for QA and audits.
 
