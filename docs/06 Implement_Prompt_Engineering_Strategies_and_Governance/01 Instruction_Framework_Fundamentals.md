@@ -33,8 +33,9 @@ Typical components:
   - JSON schemas, markdown templates, or UI-oriented structures.
 
 These are expressed as **prompt templates + configuration**, not scattered one-off strings.
+
 _Diagram:_  
-![Core framework elements](./images/core-framework-elements.svg)
+<img src="./images/core-framework-elements.svg" alt="Core framework elements" width="480" />
 
 ---
 ---
@@ -53,7 +54,7 @@ Instruction frameworks sit inside a broader **control framework** for FMs:
   - Human review, red-teaming, incident handling, and prompt/model refinements.
 
 _Diagram:_  
-![Foundation model control framework](./images/foundation-model-control-framework.svg)
+<img src="./images/foundation-model-control-framework.svg" alt="Foundation model control framework" width="480" />
 
 This stack makes FM behavior **predictable, auditable, and improvable** over time.
 
