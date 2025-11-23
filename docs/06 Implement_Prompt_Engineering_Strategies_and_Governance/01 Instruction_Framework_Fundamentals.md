@@ -16,10 +16,7 @@ An instruction framework provides:
 - **Templates** for common task types (Q&A, summarize, classify, route, transform).
 - **Versioned, testable prompts** managed like code/config.
 
-_Diagram:_  
-![Core framework elements](./images/core-framework-elements.svg)
 
----
 
 ## 2. Core elements of an instruction framework 🧱
 
@@ -36,7 +33,10 @@ Typical components:
   - JSON schemas, markdown templates, or UI-oriented structures.
 
 These are expressed as **prompt templates + configuration**, not scattered one-off strings.
+_Diagram:_  
+![Core framework elements](./images/core-framework-elements.svg)
 
+---
 ---
 
 ## 3. Foundation model control framework 🛡️
