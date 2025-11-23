@@ -40,7 +40,48 @@ _Diagram:_
 ---
 ---
 
-## 3. Foundation model control framework 🛡️
+## 3. Instruction patterns & prompt examples ✏️
+
+Frameworks become real when you standardize **prompt patterns**.
+
+### 3.1 Common instruction patterns
+
+- **Q&A over documents (RAG)**
+  - Role: “You are a helpful assistant that answers strictly based on the provided context.”
+  - Objectives: accurate, concise answer + citations.
+  - Guardrails: don’t invent facts; if unsure, say you don’t know.
+  - Output: markdown with headings + bullet list + citation section.
+- **Summarization**
+  - Role: analyst or writer with target audience (exec, customer, engineer).
+  - Objectives: length constraint, reading level, include/exclude details.
+  - Output: fixed structure (overview, key points, risks, next steps).
+- **Classification / labeling**
+  - Role: classifier following a strict label set.
+  - Objectives: choose exactly one label (or small set); no explanation if not needed.
+  - Output: JSON object with `label` and optional `confidence`.
+
+### 3.2 Example prompt template (RAG Q&A)
+
+High-level structure:
+- **System / instruction** – role, objectives, guardrails.
+- **Context block** – retrieved chunks with source metadata.
+- **User block** – actual question.
+
+Example (conceptual):
+- **System**:  
+  “You are a compliance assistant. Answer using only the context. If the answer is not present, say you don’t know and suggest next steps. Always include clause numbers and jurisdictions when available.”
+- **Context**:  
+  `{{retrieved_context_with_sources}}`
+- **User**:  
+  `{{user_question}}`
+- **Expected output**:  
+  JSON with fields like `answer`, `citations`, `risk_flags`.
+
+These templates live in config (YAML/JSON) so they can be versioned, tested, and reused across apps.
+
+---
+
+## 4. Foundation model control framework 🛡️
 
 Instruction frameworks sit inside a broader **control framework** for FMs:
 
@@ -60,7 +101,7 @@ This stack makes FM behavior **predictable, auditable, and improvable** over tim
 
 ---
 
-## 4. How this ties into retrieval & RAG 🔗
+## 5. How this ties into retrieval & RAG 🔗
 
 For retrieval-augmented systems, instruction frameworks define:
 - How retrieved context is introduced (citations, doc types, timestamps).
@@ -73,7 +114,7 @@ On the exam, expect to connect **prompt/Instruction design** with **retrieval be
 
 ---
 
-## 5. Exam-ready points ✅
+## 6. Exam-ready points ✅
 
 Be able to explain:
 - Why enterprises move from “clever prompts” to **structured instruction frameworks**.
